@@ -1,5 +1,8 @@
 package br.com.java.model;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Mercadoria {
 	
 	private Integer id;
@@ -7,6 +10,8 @@ public class Mercadoria {
 	private String descricao;
 	private Integer quantidade;
 	private Double preco;
+	
+	private static final NumberFormat numberFmt = NumberFormat.getNumberInstance(new Locale("pt","BR"));
 	
 	public Mercadoria(Integer id, String nome, String descricao, Integer quantidade, Double preco) {
 		super();
@@ -61,6 +66,11 @@ public class Mercadoria {
 	public String toString() {
 		return "Mercadoria [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", quantidade=" + quantidade
 				+ ", preco=" + preco + "]";
+	}
+
+	public static String convertPrecoToString(double preco) {
+		// TODO Auto-generated method stub
+		return numberFmt.format(preco);
 	}
 	
 	
