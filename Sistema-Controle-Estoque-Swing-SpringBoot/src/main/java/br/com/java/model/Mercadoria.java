@@ -12,7 +12,6 @@ public class Mercadoria {
 	private Double preco;
 	
 	private static final NumberFormat numberFmt = NumberFormat.getNumberInstance(new Locale("pt","BR"));
-	
 	public Mercadoria(Integer id, String nome, String descricao, Integer quantidade, Double preco) {
 		super();
 		this.id = id;
@@ -64,8 +63,7 @@ public class Mercadoria {
 
 	@Override
 	public String toString() {
-		return "Mercadoria [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", quantidade=" + quantidade
-				+ ", preco=" + preco + "]";
+		return "[ " + nome + " - " + descricao + " - " + quantidade + " - " + preco + " ]";
 	}
 
 	public static String convertPrecoToString(double preco) {
