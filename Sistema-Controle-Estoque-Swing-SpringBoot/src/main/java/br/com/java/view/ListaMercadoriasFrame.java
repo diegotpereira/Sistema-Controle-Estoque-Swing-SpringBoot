@@ -18,6 +18,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import br.com.java.model.Mercadoria;
+
+
+
+
+
 
 
 
@@ -25,7 +31,7 @@ import javax.swing.SwingUtilities;
 
 public class ListaMercadoriasFrame extends JFrame{
 	
-	//private MercadoriaTable tabela;
+	private MercadoriaTable tabela;
 	private JScrollPane scrollPane;
 	private JButton bNovaMercadoria;
 	private JButton bBuscarMercadoria;
@@ -51,16 +57,15 @@ public class ListaMercadoriasFrame extends JFrame{
 
 
 	private void inicializaComponentes() {
-		// TODO Auto-generated method stub
-//		tabela = new MercadoriaTable();
-//		tabela.addMouseListener(new EditarMercadoriaListener());
-//		scrollPane = new JScrollPane();
-//		scrollPane.setViewportView(tabela);
+		tabela = new MercadoriaTable();
+		tabela.addMouseListener(new EditarMercadoriaListener());
+		scrollPane = new JScrollPane();
+		scrollPane.setViewportView(tabela);
 
 		bNovaMercadoria = new JButton();
 		bNovaMercadoria.setText("Nova");
 		bNovaMercadoria.setMnemonic(KeyEvent.VK_N);
-//		bNovaMercadoria.addActionListener(new IncluirMercadoriaListener());
+		bNovaMercadoria.addActionListener(new IncluirMercadoriaListener());
 
 		bBuscarMercadoria = new JButton();
 		bBuscarMercadoria.setText("Buscar");
@@ -72,7 +77,7 @@ public class ListaMercadoriasFrame extends JFrame{
 		bAtualizaLista.setMnemonic(KeyEvent.VK_A);
 		bAtualizaLista.addActionListener(new AtualizarListaListener());
 		
-		menubar = new JMenuBar();
+//		menubar = new JMenuBar();
 //		MenuF1 mAjuda = new MenuF1("Ajuda");
 //		mAjuda.setMnemonic(KeyEvent.VK_J);
 //        JMenuItem miSobre = new JMenuItem("Sobre    - F1");
@@ -93,7 +98,19 @@ public class ListaMercadoriasFrame extends JFrame{
 
 	private void adicionaComponentes() {
 		// TODO Auto-generated method stub
+		add(scrollPane);
+		JPanel panel = new JPanel();
+		panel.add(bNovaMercadoria);
+		panel.add(bBuscarMercadoria);
+		panel.add(bAtualizaLista);
+		add(panel, BorderLayout.SOUTH);
 		
+	}
+	
+	private class IncluirMercadoriaListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+//			incluirFrame.setVisible(true);
+		}
 	}
 	private class BuscarMercadoriaListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
@@ -105,6 +122,18 @@ public class ListaMercadoriasFrame extends JFrame{
 			SwingUtilities.invokeLater(newAtualizaMercadoriasAction());
 		}
 	}
+	private class EditarMercadoriaListener extends MouseAdapter {
+		public void mouseClicked(MouseEvent event) {
+			if (event.getClickCount() == 2) {
+				Mercadoria m = tabela.getMercadoriaSelected();
+//				if (m != null) {
+//					editarFrame.setMercadoria(m);
+//					editarFrame.setVisible(true);
+//				}
+			}
+		}
+	}
+	
 	public Runnable newAtualizaMercadoriasAction() {
 		return new Runnable() {
 			public void run() {
