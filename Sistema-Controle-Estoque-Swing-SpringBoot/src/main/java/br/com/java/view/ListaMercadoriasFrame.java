@@ -21,14 +21,6 @@ import javax.swing.SwingUtilities;
 import br.com.java.model.Mercadoria;
 
 
-
-
-
-
-
-
-
-
 public class ListaMercadoriasFrame extends JFrame{
 	
 	private MercadoriaTable tabela;
@@ -39,8 +31,12 @@ public class ListaMercadoriasFrame extends JFrame{
 	private JMenuBar menubar;
 	
 	
+	private IncluirMercadoriaFrame incluirFrame;
+	private SobreFrame sobreFrame;
+	
+	
 	public ListaMercadoriasFrame() {
-		//setTitle("Lista de Mercadoria");
+		
         setTitle("Lista de Mercadoria");
 		
 		inicializaComponentes();
@@ -77,20 +73,20 @@ public class ListaMercadoriasFrame extends JFrame{
 		bAtualizaLista.setMnemonic(KeyEvent.VK_A);
 		bAtualizaLista.addActionListener(new AtualizarListaListener());
 		
-//		menubar = new JMenuBar();
-//		MenuF1 mAjuda = new MenuF1("Ajuda");
-//		mAjuda.setMnemonic(KeyEvent.VK_J);
-//        JMenuItem miSobre = new JMenuItem("Sobre    - F1");
-//        miSobre.addActionListener(new SobreMenuListener());
-//        mAjuda.addListener(new SobreMenuListener());
-//        mAjuda.add(miSobre);
-//        menubar.add(mAjuda);
-//        setJMenuBar(menubar);
+		menubar = new JMenuBar();
+		MenuF1 mAjuda = new MenuF1("Ajuda");
+		mAjuda.setMnemonic(KeyEvent.VK_J);
+        JMenuItem miSobre = new JMenuItem("Sobre    - F1");
+        miSobre.addActionListener(new SobreMenuListener());
+        mAjuda.addListener(new SobreMenuListener());
+        mAjuda.add(miSobre);
+        menubar.add(mAjuda);
+        setJMenuBar(menubar);
 		
-//		incluirFrame = new IncluirMercadoriaFrame(this);
+		incluirFrame = new IncluirMercadoriaFrame(this);
 //		editarFrame = new EditarMercadoriaFrame(this);
 //		buscaFrame = new BuscaMercadoriaFrame(this);
-//		sobreFrame = new SobreFrame();
+		sobreFrame = new SobreFrame();
 //		
 //		inicializaDB();
 	}
@@ -107,21 +103,28 @@ public class ListaMercadoriasFrame extends JFrame{
 		
 	}
 	
+	///Evento Abrir janela incluir
 	private class IncluirMercadoriaListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-//			incluirFrame.setVisible(true);
+			incluirFrame.setVisible(true);
 		}
 	}
+	
+	// Evento abrir janela Buscar mercadoria
 	private class BuscarMercadoriaListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			//buscaFrame.setVisible(true);
 		}
 	}
+	
+	//Evento abrir janela Atualizar mercadoria
 	private class AtualizarListaListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			SwingUtilities.invokeLater(newAtualizaMercadoriasAction());
 		}
 	}
+	
+	// Evento abrir janela editar mercadoria
 	private class EditarMercadoriaListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent event) {
 			if (event.getClickCount() == 2) {
@@ -131,6 +134,13 @@ public class ListaMercadoriasFrame extends JFrame{
 //					editarFrame.setVisible(true);
 //				}
 			}
+		}
+	}
+	
+	// Evento abria jaenal sobre projeto
+	private class SobreMenuListener extends AbstractAction implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			sobreFrame.setVisible(true);
 		}
 	}
 	
