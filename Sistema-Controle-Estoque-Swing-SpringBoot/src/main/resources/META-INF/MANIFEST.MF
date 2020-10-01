@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Build-Jdk: 1.8.0_261
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: br.com.java
+Implementation-Build: 52549a9247163dd3f609734b6446141b8531f789
+Built-By: Pereira Tecnologia
+Implementation-Title: Projeto demo para pequenos e medios mercados
+Implementation-email: diegoteixeirapereira@hotmail.com
+
