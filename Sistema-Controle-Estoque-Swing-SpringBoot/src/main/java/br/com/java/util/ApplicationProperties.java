@@ -45,7 +45,7 @@ public class ApplicationProperties {
 	}
 	
 	public static String getSite(){
-		return checkProperty("Implementation-Site");
+		return checkProperty("Implementation-Email");
 	}
 	
 	private static String checkProperty(String p) {
@@ -61,7 +61,7 @@ public class ApplicationProperties {
 	}
 	
 	public static URL getURLLogo() { 
-        URL imageURL = ApplicationProperties.class.getClassLoader().getResource("definir.png");  
+        URL imageURL = ApplicationProperties.class.getClassLoader().getResource("devel.png");  
         return imageURL;  
     }
 	
