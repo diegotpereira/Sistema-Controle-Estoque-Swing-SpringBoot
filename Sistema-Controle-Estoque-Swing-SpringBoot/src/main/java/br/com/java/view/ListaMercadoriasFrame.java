@@ -18,7 +18,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import br.com.java.dao.MercadoriaDAOJDBC;
+import br.com.java.exception.PersistenceException;
 import br.com.java.model.Mercadoria;
+
+
 
 
 public class ListaMercadoriasFrame extends JFrame{
@@ -88,7 +92,25 @@ public class ListaMercadoriasFrame extends JFrame{
 //		buscaFrame = new BuscaMercadoriaFrame(this);
 		sobreFrame = new SobreFrame();
 //		
-//		inicializaDB();
+		inicializaDB();
+	}
+
+
+	private void inicializaDB() {
+		// TODO Auto-generated method stub
+		
+		try {
+			
+			new MercadoriaDAOJDBC().init();
+			SwingUtilities.invokeLater(newAtualizaMercadoriasAction());
+			
+		} catch (PersistenceException ex) {
+			// TODO: handle exception
+			JOptionPane.showMessageDialog(this, "Não foi possível inicializar o Banco de dados: "+
+					ex.getMessage()+"\nVerifique a dependência do driver ou configurações do banco!", "Erro", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+			
+		}
 	}
 
 
