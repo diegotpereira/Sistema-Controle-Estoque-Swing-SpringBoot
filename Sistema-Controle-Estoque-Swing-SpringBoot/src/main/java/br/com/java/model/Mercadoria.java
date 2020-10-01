@@ -1,6 +1,7 @@
 package br.com.java.model;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Locale;
 
 public class Mercadoria {
@@ -69,6 +70,11 @@ public class Mercadoria {
 	public static String convertPrecoToString(double preco) {
 		// TODO Auto-generated method stub
 		return numberFmt.format(preco);
+	}
+
+	public static Double formatStringToPreco(String strPreco) throws ParseException {
+		// TODO Auto-generated method stub
+		return numberFmt.parse(strPreco).doubleValue();
 	}
 	
 	

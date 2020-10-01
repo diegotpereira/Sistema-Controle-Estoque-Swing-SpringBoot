@@ -6,14 +6,24 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+import br.com.java.dao.MercadoriaDAO;
+import br.com.java.dao.MercadoriaDAOJDBC;
+import br.com.java.model.Mercadoria;
+
+import java.text.ParseException;
+
 
 public class IncluirMercadoriaFrame extends JFrame{
 	
@@ -132,8 +142,18 @@ public class IncluirMercadoriaFrame extends JFrame{
 			
 			try {
 				
-			} catch (Exception e2) {
+				Mercadoria m = loadMercadoriaFromPanel();
+				MercadoriaDAO dao = new MercadoriaDAOJDBC();
+				dao.save(m);
+				
+				setVisible(false);
+				resetForm();
+				SwingUtilities.invokeLater(framePrincipal.newAtualizaMercadoriasAction());
+				
+			} catch (Exception ex) {
 				// TODO: handle exception
+				JOptionPane.showMessageDialog(IncluirMercadoriaFrame.this, 
+						ex.getMessage(), "Erro ao incluir Mercadoria", JOptionPane.ERROR_MESSAGE);
 			}
 			
 		}
@@ -157,6 +177,80 @@ public class IncluirMercadoriaFrame extends JFrame{
 			
 		}
 		
+		
+	}
+	public Mercadoria loadMercadoriaFromPanel() throws ParseException {
+		// TODO Auto-generated method stub
+		String msg = validador();
+		
+		if (!msg.isEmpty()) {
+			throw new RuntimeException("Informe o(s) campo(s): "+msg);
+		}
+		
+		String nome = tfNome.getText().trim();
+		String descricao = tfDescricao.getText().trim();
+		
+		if (nome.length() < 5) {
+			throw new RuntimeException("O nome deve conter no mínimo 5 caracteres!");
+		}
+		
+		Integer quantidade = null;
+		
+		try {
+			quantidade = Integer.valueOf(tfQuantidade.getText());
+		} catch (NumberFormatException nex) {
+			// TODO: handle exception
+			throw new RuntimeException("Erro durante a conversão do campo quantidade (Integer).\nConteudo inválido!");
+		}
+		
+		if (quantidade < 1) {
+			throw new RuntimeException("O valor mínimo da quantidade deve ser 1!");
+		}
+		
+		Double preco = null;
+		
+		preco = Mercadoria.formatStringToPreco(tfPreco.getText());
+		
+		if (preco < 1) {
+			throw new RuntimeException("O valor mínimo do preço deve ser 1!");
+		}
+		
+		return new Mercadoria(null, nome, descricao, quantidade, preco);
+	}
+	
+	
+	
+	
+	
+	
+	
+	private String validador() {
+		// TODO Auto-generated method stub
+		StringBuilder sb = new StringBuilder();
+		sb.append(tfNome.getText() == null || "".equals(tfNome.getText().trim()) ? "Nome, " : "");
+		sb.append(tfPreco.getText() == null || "".equals(tfPreco.getText().trim()) ? "Preço, " : "");
+		sb.append(tfQuantidade.getText() == null || "".equals(tfQuantidade.getText().trim()) ? "Quantidade, " : "");
+		
+		if (!sb.toString().isEmpty()) {
+			sb.delete(sb.toString().length()-2, sb.toString().length());
+		}
+		return sb.toString();
+	}
+
+	public void setMercadoria(Mercadoria m){
+		resetForm();
+		if (m != null) {
+			populaTextFields(m);
+		}
+	}
+
+	private void populaTextFields(Mercadoria m) {
+		// TODO Auto-generated method stub
+		tfId.setValue(m.getId());
+		tfNome.setText(m.getNome());
+		tfDescricao.setText(m.getDescricao());
+		tfQuantidade.setValue(m.getQuantidade());
+		tfPreco.setText(Mercadoria.convertPrecoToString(m.getPreco()));
 		
 	}
 
