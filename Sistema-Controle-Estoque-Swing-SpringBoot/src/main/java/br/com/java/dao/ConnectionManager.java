@@ -15,7 +15,7 @@ import br.com.java.exception.PersistenceException;
 public class ConnectionManager {
 	
 	
-	private static final String STR_DRIVER = "org.hibernate.dialect.MySQLDialect";
+	private static final String STR_DRIVER = "com.mysql.cj.jdbc.Driver";
 	private static final String STR_CON = "jdbc:mysql://localhost:3306/mercadoria?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false";
 	private static final String USER = "root";
 	private static final String PASSWORD = "root";
