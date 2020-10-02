@@ -179,7 +179,7 @@ public class IncluirMercadoriaFrame extends JFrame{
 		
 		
 	}
-	public Mercadoria loadMercadoriaFromPanel() throws ParseException {
+	protected Mercadoria loadMercadoriaFromPanel() throws ParseException {
 		// TODO Auto-generated method stub
 		String msg = validador();
 		
@@ -252,6 +252,14 @@ public class IncluirMercadoriaFrame extends JFrame{
 		tfQuantidade.setValue(m.getQuantidade());
 		tfPreco.setText(Mercadoria.convertPrecoToString(m.getPreco()));
 		
+	}
+	
+	protected Integer getIdMercadoria(){
+		try {
+			return Integer.parseInt(tfId.getText());
+		} catch (Exception nex) {
+			return null;
+		}
 	}
 
 }
