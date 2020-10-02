@@ -49,10 +49,10 @@ public class MercadoriaDAOJDBC implements MercadoriaDAO {
 	}
 
 	@Override
-	public void save(Mercadoria mercadoria) throws PersistenceException{
+	public void save(Mercadoria m) throws PersistenceException{
 		// TODO Auto-generated method stub
 		
-		if (mercadoria == null) {
+		if (m== null) {
 			
 			throw new PersistenceException("Informe a Mercadoria para salvar!");
 			
@@ -62,10 +62,10 @@ public class MercadoriaDAOJDBC implements MercadoriaDAO {
 		try {
 			
 			conn = ConnectionManager.getConnection();
-			if (mercadoria.getId() == null) {
-				stmt = getStatementInsert(conn, mercadoria);
+			if (m.getId() == null) {
+				stmt = getStatementInsert(conn, m);
 			} else {
-				stmt = getStatementUpdate(conn, mercadoria);
+				stmt = getStatementUpdate(conn, m);
 			}
 			stmt.executeUpdate();
 			conn.commit();

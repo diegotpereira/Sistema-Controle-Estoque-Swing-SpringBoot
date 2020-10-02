@@ -5,7 +5,7 @@ import br.com.java.model.Mercadoria;
 
 public interface MercadoriaDAO  {
 
-	void save(Mercadoria mercadoria);
+	void save(Mercadoria m);
 
 	void init();
 
