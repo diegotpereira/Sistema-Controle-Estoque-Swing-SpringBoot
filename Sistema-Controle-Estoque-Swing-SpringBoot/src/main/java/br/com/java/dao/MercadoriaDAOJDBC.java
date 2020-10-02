@@ -2,14 +2,18 @@ package br.com.java.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import br.com.java.dao.MercadoriaDAO;
 import br.com.java.exception.PersistenceException;
 import br.com.java.model.Mercadoria;
+
 
 
 public class MercadoriaDAOJDBC implements MercadoriaDAO {
@@ -108,5 +112,42 @@ public class MercadoriaDAOJDBC implements MercadoriaDAO {
 		
 		log.debug("SQL: "+sql);
 		return conn.prepareStatement(sql);
+	}
+
+	@Override
+	public List<Mercadoria> getAll()throws PersistenceException {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = ConnectionManager.getConnection();
+			stmt = createStatementWithLog(conn, GET_ALL_MERCADORIAS);
+			rs = stmt.executeQuery();
+			
+			return toMercadorias(rs);
+		} catch (SQLException e) {
+			String errorMsg = "Erro ao consultar todas as mercadorias!";
+			log.error(errorMsg, e);
+			throw new PersistenceException(errorMsg, e);
+		} finally {
+			ConnectionManager.closeAll(conn, stmt, rs);
+		}
+	}
+
+	private List<Mercadoria> toMercadorias(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		List<Mercadoria> lista = new ArrayList<Mercadoria>();
+		while (rs.next()) {
+			int id = rs.getInt("id");
+			String nome = rs.getString("nome");
+			String descricao = rs.getString("descricao");
+			int qtde = rs.getInt("quantidade");
+			double preco = rs.getDouble("preco");
+			
+			lista.add(new Mercadoria(id, nome, descricao, qtde, preco));
+		}
+		return lista;
 	}
 }
