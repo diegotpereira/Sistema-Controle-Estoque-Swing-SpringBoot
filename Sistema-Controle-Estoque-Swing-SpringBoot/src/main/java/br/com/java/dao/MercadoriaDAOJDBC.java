@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -13,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import br.com.java.exception.PersistenceException;
 import br.com.java.model.Mercadoria;
+
 
 
 
@@ -191,4 +193,33 @@ public class MercadoriaDAOJDBC implements MercadoriaDAO {
 			ConnectionManager.closeAll(conn, stmt, rs);
 		}
 	}
+
+	@Override
+	public List<Mercadoria> getMercadoriasByNome(String nome) throws PersistenceException{
+		// TODO Auto-generated method stub
+		
+		if (nome == null || nome.isEmpty()) {
+			return Collections.EMPTY_LIST;
+		}
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = ConnectionManager.getConnection();
+			stmt = createStatementWithLog(conn, GET_MERCADORIAS_BY_NOME);
+			stmt.setString(1, nome + "%");
+			rs = stmt.executeQuery();
+			
+			return toMercadorias(rs);
+		} catch (SQLException e) {
+			// TODO: handle exception
+			String errorMsg = "Erro ao consultar mercadorias por nome!";
+			log.error(errorMsg, e);
+			throw new PersistenceException(errorMsg, e);
+		} finally {
+			ConnectionManager.closeAll(conn, stmt, rs);
+		}
+	}	
 }

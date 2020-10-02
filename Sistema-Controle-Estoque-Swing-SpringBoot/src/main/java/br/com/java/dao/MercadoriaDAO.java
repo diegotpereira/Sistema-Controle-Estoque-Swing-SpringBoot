@@ -15,4 +15,6 @@ public interface MercadoriaDAO  {
 
 	void init();
 
+	List<Mercadoria> getMercadoriasByNome(String nome);
+
 }
