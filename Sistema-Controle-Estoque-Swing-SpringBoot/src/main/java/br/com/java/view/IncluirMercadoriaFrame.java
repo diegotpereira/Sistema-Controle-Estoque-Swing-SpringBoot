@@ -22,6 +22,7 @@ import br.com.java.dao.MercadoriaDAO;
 import br.com.java.dao.MercadoriaDAOJDBC;
 import br.com.java.model.Mercadoria;
 
+
 import java.text.ParseException;
 
 
@@ -174,6 +175,23 @@ public class IncluirMercadoriaFrame extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
+			Integer id = getIdMercadoria();
+			if (id != null) {
+				try {
+					MercadoriaDAO dao = new MercadoriaDAOJDBC();
+					Mercadoria m = dao.findById(id);
+					if (m != null) {
+						dao.remove(m);
+					}
+					
+					setVisible(false);
+					resetForm();
+					SwingUtilities.invokeLater(framePrincipal.newAtualizaMercadoriasAction());
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(IncluirMercadoriaFrame.this,
+							ex.getMessage(), "Erro ao excluir Mercadoria", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 			
 		}
 		
