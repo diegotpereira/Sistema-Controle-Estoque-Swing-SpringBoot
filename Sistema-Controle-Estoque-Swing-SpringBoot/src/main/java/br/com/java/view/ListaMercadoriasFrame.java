@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import br.com.java.dao.MercadoriaDAO;
 import br.com.java.dao.MercadoriaDAOJDBC;
 import br.com.java.exception.PersistenceException;
 import br.com.java.model.Mercadoria;
@@ -166,12 +167,13 @@ public class ListaMercadoriasFrame extends JFrame{
 		}
 	}
 	
+	// Evento preenche a lista de mercadorias
 	public Runnable newAtualizaMercadoriasAction() {
 		return new Runnable() {
 			public void run() {
 				try {
-//					MercadoriaDAO dao = new MercadoriaDAOJDBC();
-//					tabela.reload(dao.getAll());
+					MercadoriaDAO dao = new MercadoriaDAOJDBC();
+					tabela.reload(dao.getAll());
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(ListaMercadoriasFrame.this,
 							ex.getMessage(), "Erro ao consultar Mercadoria(s)", JOptionPane.ERROR_MESSAGE);
