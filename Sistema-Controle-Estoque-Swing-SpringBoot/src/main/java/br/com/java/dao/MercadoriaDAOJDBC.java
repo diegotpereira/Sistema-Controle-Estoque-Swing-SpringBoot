@@ -20,6 +20,8 @@ import br.com.java.model.Mercadoria;
 
 
 
+
+
 public class MercadoriaDAOJDBC implements MercadoriaDAO {
 	
 	private final static String CREATE_TABLE = "CREATE TABLE  IF NOT EXISTS mercadoria (id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL, nome VARCHAR(20) NOT NULL, descricao varchar(80) NOT NULL, preco decimal(10,2) NOT NULL, quantidade INTEGER NOT NULL)";
@@ -220,6 +222,42 @@ public class MercadoriaDAOJDBC implements MercadoriaDAO {
 			throw new PersistenceException(errorMsg, e);
 		} finally {
 			ConnectionManager.closeAll(conn, stmt, rs);
+		}
+	}
+
+	@Override
+	public void remove(Mercadoria m) throws PersistenceException{
+		// TODO Auto-generated method stub
+		
+		if (m == null || m.getId() == null) {
+			throw new PersistenceException("Informe a mercadoria para exclusao!");
+		}
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			
+			conn = ConnectionManager.getConnection();
+			stmt = createStatementWithLog(conn, DELETE_MERCADORIA);
+			stmt.setInt(1, m.getId());
+			stmt.executeUpdate();
+			conn.commit();
+			log.debug("Mercadoria foi excluida");
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+			String errorMsg = "Erro ao excluir Mercadoria!";
+			
+			log.error(errorMsg, e);
+			throw new PersistenceException(errorMsg, e);
+		}finally{
+			ConnectionManager.closeAll(conn, stmt);
 		}
 	}	
 }

@@ -17,4 +17,6 @@ public interface MercadoriaDAO  {
 
 	List<Mercadoria> getMercadoriasByNome(String nome);
 
+	void remove(Mercadoria m);
+
 }
