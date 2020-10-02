@@ -10,9 +10,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import br.com.java.dao.MercadoriaDAO;
+
 import br.com.java.exception.PersistenceException;
 import br.com.java.model.Mercadoria;
+
+
 
 
 
@@ -149,5 +151,44 @@ public class MercadoriaDAOJDBC implements MercadoriaDAO {
 			lista.add(new Mercadoria(id, nome, descricao, qtde, preco));
 		}
 		return lista;
+	}
+
+	@Override
+	public Mercadoria findById(Integer id) throws PersistenceException{
+		// TODO Auto-generated method stub
+		
+		if (id == null || id.intValue() <= 0) {
+			throw new PersistenceException("Informe o id válido para fazer a busca!");
+		}
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		Mercadoria m = null;
+		
+		try {
+			conn = ConnectionManager.getConnection();
+			stmt = createStatementWithLog(conn, GET_MERCADORIA_BY_ID);
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				String nome = rs.getString("nome");
+				String descricao = rs.getString("descricao");
+				int qtde = rs.getInt("quantidade");
+				double preco = rs.getDouble("preco");
+				
+				m = new Mercadoria(id, nome, descricao, qtde, preco);
+			}
+			return m;
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			String errorMsg = "Erro ao consultar mercadoria por id!";
+			log.error(errorMsg, e);
+			throw new PersistenceException(errorMsg, e);
+		} finally {
+			ConnectionManager.closeAll(conn, stmt, rs);
+		}
 	}
 }

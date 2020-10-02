@@ -10,6 +10,8 @@ public interface MercadoriaDAO  {
 	void save(Mercadoria m);
 	
 	List<Mercadoria> getAll();
+	
+	Mercadoria findById(Integer id);
 
 	void init();
 
