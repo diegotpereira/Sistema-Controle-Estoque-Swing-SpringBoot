@@ -26,6 +26,7 @@ import br.com.java.model.Mercadoria;
 
 
 
+
 public class ListaMercadoriasFrame extends JFrame{
 	
 	private MercadoriaTable tabela;
@@ -37,6 +38,7 @@ public class ListaMercadoriasFrame extends JFrame{
 	
 	
 	private IncluirMercadoriaFrame incluirFrame;
+	private EditarMercadoriaFrame editarFrame;
 	private SobreFrame sobreFrame;
 	
 	
@@ -89,7 +91,7 @@ public class ListaMercadoriasFrame extends JFrame{
         setJMenuBar(menubar);
 		
 		incluirFrame = new IncluirMercadoriaFrame(this);
-//		editarFrame = new EditarMercadoriaFrame(this);
+		editarFrame = new EditarMercadoriaFrame(this);
 //		buscaFrame = new BuscaMercadoriaFrame(this);
 		sobreFrame = new SobreFrame();
 //		
@@ -136,7 +138,7 @@ public class ListaMercadoriasFrame extends JFrame{
 	// Evento abrir janela Buscar mercadoria
 	private class BuscarMercadoriaListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			//buscaFrame.setVisible(true);
+//			buscaFrame.setVisible(true);
 		}
 	}
 	
@@ -152,10 +154,10 @@ public class ListaMercadoriasFrame extends JFrame{
 		public void mouseClicked(MouseEvent event) {
 			if (event.getClickCount() == 2) {
 				Mercadoria m = tabela.getMercadoriaSelected();
-//				if (m != null) {
-//					editarFrame.setMercadoria(m);
-//					editarFrame.setVisible(true);
-//				}
+				if (m != null) {
+					editarFrame.setMercadoria(m);
+					editarFrame.setVisible(true);
+				}
 			}
 		}
 	}
